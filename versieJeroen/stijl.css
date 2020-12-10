@@ -1,0 +1,72 @@
+a, button, header, h2 {
+    font-family: 'Courier New', Courier, monospace
+}
+
+header, li, button {
+    background-color: mediumseagreen;
+    color: ivory;
+}
+
+h1,h2 {
+    text-align: center;
+}
+
+h2 {
+    padding: 1em;
+}
+
+nav {
+    float: left;
+    background-color: lightslategrey;
+    width: 12em;
+    padding: 1em;
+}
+
+canvas {
+    float: left;
+    border: 0.1em solid #d3d3d3;
+}
+
+header {
+    width: 100%;
+    padding: 0.25em;
+    text-align: center;
+    font-size: x-large;
+    margin-bottom: 1em;
+}
+
+li {
+    width: 10em;
+    padding: 0.25em;
+    margin: 0.25em;
+    border-radius: 0.5em;
+}
+
+a {
+    text-decoration: none;
+    color: ivory;
+}
+
+p {
+    padding: 0.5em;
+}
+
+button {
+    width: 5em;
+    margin: 0.25em;
+    border-radius: 0.5em;
+}
+
+article {
+    float: left;
+    padding-top: 1em;
+    padding-left: 1em;
+}
+
+button:hover, li:hover {
+    background-color: lightseagreen;
+}
+
+#startSnake {
+    margin-left: 8em;
+}
