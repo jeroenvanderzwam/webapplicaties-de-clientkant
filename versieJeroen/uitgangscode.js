@@ -33,30 +33,30 @@ var snakeModule = (function() {
     }
 
     Snake.prototype.canMove = function(direction) {
-        return !snake.headHitsASegment();
+        return !this.headHitsASegment();
     }
 
     Snake.prototype.headHitsAFood = function() {
-        return this.foods.some(this.headHitsFood)
+        var head = this.getHead();
+        return this.foods.some(this.headHitsFood, head)
     }
 
     Snake.prototype.headHitsFood = function(element) {
-        var head = snake.getHead()
-        return head.collidesWithOneOf(element);
+        return this.collidesWithOneOf(element);
     }
 
     Snake.prototype.headHitsASegment = function() {
         var segmentsWithoutHead = this.segments.slice(0,-1)
-        return segmentsWithoutHead.some(this.headHitsSegment);
+        var head = this.getHead();
+        return segmentsWithoutHead.some(this.headHitsSegment, head);
     }
 
     Snake.prototype.headHitsSegment = function(element) {
-        var head = snake.getHead()
-        return head.collidesWithOneOf(element)
+        return this.collidesWithOneOf(element)
     }
 
     Snake.prototype.removeAFood = function() {
-        var head = snake.getHead()
+        var head = this.getHead();
         this.foods = this.foods.filter(function (element) { 
             return !head.collidesWithOneOf(element)}, this)
     }
@@ -66,7 +66,7 @@ var snakeModule = (function() {
     }
 
     Snake.prototype.moveSnake = function(direction, addElement) {
-        var head = snake.getHead()
+        var head = this.getHead();
         head.color = SNAKE;
         this.segments.push(head.getNewHead(direction));
         if (!addElement) {
@@ -151,7 +151,7 @@ var snakeModule = (function() {
         }
         return newHead;
     }
-    
+
     Element.prototype.collidesWithOneOf = function (element) {
         return this.x == element.x && this.y == element.y;
     };
