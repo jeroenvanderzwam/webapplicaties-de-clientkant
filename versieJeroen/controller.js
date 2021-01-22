@@ -45,11 +45,15 @@ function move(direction) {
     if (snakeModule.move(direction)) {
         draw();
         if (snakeModule.heeftGewonnen()) {
-            console.log('je hebt gewonnen');
+            stop();
+            context.font = '20px Georgia';
+            context.fillText('you win')
         }
     } else {
-        console.log('je hebt verloren')
         stop();
+        context.font = '20px Georgia';
+        context.fillText('you lose', 10, 90)
+        
     };
 }
 
