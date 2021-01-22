@@ -29,26 +29,23 @@ var snakeModule = (function() {
     }
 
     Snake.prototype.canMove = function(direction) {
-        return !this.headHitsASegment();
+        var head = this.getHead();
+        return !this.headHitsASegment() && head.withinCanvas(direction);
     }
 
     Snake.prototype.headHitsAFood = function() {
         var head = this.getHead();
-        return this.foods.some(this.headHitsFood, head)
-    }
-
-    Snake.prototype.headHitsFood = function(element) {
-        return this.collidesWithOneOf(element);
+        return this.foods.some(function(element) {
+            return head.collidesWithOneOf(element);
+        })
     }
 
     Snake.prototype.headHitsASegment = function() {
-        var segmentsWithoutHead = this.segments.slice(0,-1)
         var head = this.getHead();
-        return segmentsWithoutHead.some(this.headHitsSegment, head);
-    }
-
-    Snake.prototype.headHitsSegment = function(element) {
-        return this.collidesWithOneOf(element)
+        var segmentsWithoutHead = this.segments.slice(0,-1)
+        return segmentsWithoutHead.some(function(element) {
+            return head.collidesWithOneOf(element)
+        });
     }
 
     Snake.prototype.removeAFood = function() {
@@ -127,6 +124,25 @@ var snakeModule = (function() {
     this.x = x;
     this.y = y;
     this.color = color;
+    }
+
+    Element.prototype.withinCanvas = function(direction) {
+        var result = true;
+        switch(direction) {
+            case LEFT:
+                result = this.x - R >= XMIN;
+                break;
+            case RIGHT:
+                result = this.x + R <= xMax;
+                break;
+            case UP: 
+                result = this.y - R >= YMIN;
+                break;
+            case DOWN:
+                result = this.y + R <= yMax;
+                break;
+            }
+        return result;
     }
 
     Element.prototype.getNewHead = function(direction) {
