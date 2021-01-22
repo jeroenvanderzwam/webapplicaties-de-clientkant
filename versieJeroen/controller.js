@@ -1,6 +1,6 @@
 var controller = (function() {
     const                  
-        SLEEPTIME = 500,
+        SLEEPTIME = 100,
         LEFTKEY = 37,
         UPKEY = 38,
         RIGHTKEY = 39,
@@ -44,6 +44,9 @@ function stop() {
 function move(direction) {
     if (snakeModule.move(direction)) {
         draw();
+        if (snakeModule.heeftGewonnen()) {
+            console.log('je hebt gewonnen');
+        }
     } else {
         console.log('je hebt verloren')
         stop();

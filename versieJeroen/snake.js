@@ -3,7 +3,8 @@ var snakeModule = (function() {
         xMax,                     
         yMax,
         width,         
-        height; 
+        height,
+        gewonnen = false; 
     const 
         R = 10, 
         STEP = 2 * R,    
@@ -58,11 +59,11 @@ var snakeModule = (function() {
         return this.foods.length == 0;
     }
 
-    Snake.prototype.moveSnake = function(direction, addElement) {
+    Snake.prototype.moveSnake = function(direction, snakeShouldGrow) {
         var head = this.getHead();
         head.color = SNAKE;
-        this.segments.push(head.getNewHead(direction));
-        if (!addElement) {
+        this.segments.push(this.getNewHead(direction));
+        if (!snakeShouldGrow) {
             this.segments.shift();
         }
     }
@@ -79,7 +80,7 @@ var snakeModule = (function() {
             this.moveSnake(direction, false);
         }
         if (this.noFoodsLeft()) {
-            console.log('Je hebt gewonnen')
+            gewonnen = true;
         }
     }
 
@@ -99,6 +100,26 @@ var snakeModule = (function() {
                 i++;
             }
         }
+    }
+
+    Snake.prototype.getNewHead = function(direction) {
+        var head = this.getHead()
+        var newHead = createElement(head.x, head.y, HEAD);
+        switch (direction) {
+            case UP:
+                newHead.y = head.y - STEP;
+                break;
+            case DOWN:
+                newHead.y = head.y + STEP;
+                break;
+            case LEFT:
+                newHead.x = head.x - STEP;
+                break;
+            case RIGHT:
+                newHead.x = head.x + STEP;
+                break;
+        }
+        return newHead;
     }
 
     /**
@@ -143,25 +164,6 @@ var snakeModule = (function() {
                 break;
             }
         return result;
-    }
-
-    Element.prototype.getNewHead = function(direction) {
-        var newHead = createElement(this.x, this.y, HEAD);
-        switch (direction) {
-            case UP:
-                newHead.y = this.y - STEP;
-                break;
-            case DOWN:
-                newHead.y = this.y + STEP;
-                break;
-            case LEFT:
-                newHead.x = this.x - STEP;
-                break;
-            case RIGHT:
-                newHead.x = this.x + STEP;
-                break;
-        }
-        return newHead;
     }
 
     Element.prototype.collidesWithOneOf = function (element) {
@@ -217,6 +219,10 @@ var snakeModule = (function() {
         return result;
     }
 
+    function heeftGewonnen() {
+        return gewonnen;
+    }
+
     return {
         UP: UP,
         RIGHT: RIGHT,
@@ -225,6 +231,7 @@ var snakeModule = (function() {
         startSnake: startSnake,
         move: move,
         getSnakeFoods: getSnakeFoods,
-        getSnakeSegments: getSnakeSegments
+        getSnakeSegments: getSnakeSegments,
+        heeftGewonnen: heeftGewonnen
     }
 })();
