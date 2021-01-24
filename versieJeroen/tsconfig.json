@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es5",                        
+    "module": "es6",                    
+    "outDir": ".",                      
+    "strict": true,                                      
+    "esModuleInterop": true,                
+    "skipLibCheck": true,                    
+    "forceConsistentCasingInFileNames": true,
+​​​​​​​    "lib": ["es2016", "dom", "es5"]
+  },
+  "files": ["snake.ts", "controller.ts"]
+}
