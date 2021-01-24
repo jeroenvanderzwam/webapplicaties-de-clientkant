@@ -17,23 +17,21 @@ export module controller {
         canvas: any,                
         direction: string = snakeModule.UP,
         context: any;
-
-        export class SnakeController {
  /**
   @function init() -> void
   @desc Haal eventueel bestaand voedsel en een bestaande slang weg, cre\"eer een slang, genereer voedsel, en teken alles
 */
-    init() {
-        canvas = document.getElementById('mijnSnakeCanvas') as HTMLCanvasElement;
-        context = canvas.getContext('2d');
-        width = canvas.width;
-        height = canvas.height;
+    export function init() {
+        canvas = $('#mijnSnakeCanvas').clearCanvas();
+        context = canvas[0].getContext('2d');
+        width = canvas[0].width;
+        height = canvas[0].height;
         snake = new snakeModule.Snake(width, height);
-        this.draw();
-        snakeTimer = setInterval(this.move, SLEEPTIME)
+        draw();
+        snakeTimer = setInterval(move, SLEEPTIME)
     }
 
-    stop() {
+    export function stop() {
         context.clearRect(0,0,width, height);
         clearInterval(snakeTimer)
     }
@@ -44,16 +42,16 @@ export module controller {
         tenzij slang uit canvas zou verdwijnen  
   @param   {string} direction de richting (een van de constanten UP, DOWN, LEFT of RIGHT)
 */
-    move() {
+    export function move() {
         if (snake.move(direction)) {
-            this.draw();
+            draw();
             if (snake.heeftGewonnen()) {
-                this.stop();
+                stop();
                 context.font = '20px Georgia';
                 context.fillText('you win', 10, 90)
             }
         } else {
-            this.stop();
+            stop();
             context.font = '20px Georgia';
             context.fillText('you lose', 10, 90)
         };
@@ -63,14 +61,14 @@ export module controller {
      @function draw() -> void
     @desc Teken de slang en het voedsel
     */
-    draw() {
+    export function draw() {
         context.clearRect(0,0,width, height);
         
         var foods = snake.getSnakeFoods()
-        foods.forEach(this.drawElement);
+        foods.forEach(drawElement);
 
         var segments = snake.getSnakeSegments()
-        segments.forEach(this.drawElement);
+        segments.forEach(drawElement);
     }
 
     /**
@@ -79,7 +77,7 @@ export module controller {
     @param {Element} element een Element object
     @param  {dom object} canvas het tekenveld
     */
-    drawElement(element: snakeModule.Element) {
+    export function drawElement(element: snakeModule.Element) {
         canvas.drawArc({
             draggable: false,
             fillStyle: element.color,
@@ -89,7 +87,7 @@ export module controller {
         })
     };
 
-    changeDirection(event: any) {
+    export function changeDirection(event: any) {
         switch (event.which) {
             case LEFTKEY:
                 direction = snakeModule.LEFT;
@@ -104,14 +102,11 @@ export module controller {
                 direction = snakeModule.DOWN;
                 break;
         }
-    }
-}
-       
+    }  
 }
 
-var cont = new controller.SnakeController();
 $(document).ready(function () {
-    $("#startSnake").click(cont.init);
-    $("#stopSnake").click(cont.stop);
+    $("#startSnake").click(controller.init);
+    $("#stopSnake").click(controller.stop);
 });
-$(document).keydown(cont.changeDirection);
+$(document).keydown(controller.changeDirection);

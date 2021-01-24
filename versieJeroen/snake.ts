@@ -1,3 +1,4 @@
+
 export module snakeModule {
     let xMax: number,                     
         yMax: number,
@@ -58,9 +59,13 @@ export module snakeModule {
      return result;
  }
 
- collidesWithOneOf(element: Element) {
-     return this.x == element.x && this.y == element.y;
+ collidesWithOneOf(elementen: Element[]) {
+     return elementen.some(this.collidesWith, this)
  };
+
+ collidesWith(element: Element) {
+    return this.x == element.x && this.y == element.y
+ }
 }
 /**
  @constructor Snake
@@ -73,7 +78,7 @@ export module snakeModule {
 
         constructor(width: number, heigth: number) {
             this.startSnake(width, heigth);
-            this.segments = this.createStartSnake();;
+            this.segments = this.createStartSnake();
             this.foods = this.createFoods();;
         }
 
@@ -102,23 +107,19 @@ export module snakeModule {
 
         headHitsAFood() {
             var head = this.getHead();
-            return this.foods.some(function(element) {
-                return head.collidesWithOneOf(element);
-            })
+            return head.collidesWithOneOf(this.foods);
         }
 
     headHitsASegment() {
         var head = this.getHead();
         var segmentsWithoutHead = this.segments.slice(0,-1)
-        return segmentsWithoutHead.some(function(element) {
-            return head.collidesWithOneOf(element)
-        });
+        return head.collidesWithOneOf(segmentsWithoutHead);
     }
 
     removeAFood() {
         var head = this.getHead();
         this.foods = this.foods.filter(function (element) { 
-            return !head.collidesWithOneOf(element)}, this)
+            return !head.collidesWith(element)}, this)
     }
 
     noFoodsLeft() {
@@ -162,7 +163,7 @@ export module snakeModule {
     //we gebruiken een while omdat we, om een arraymethode te gebruiken, eerst een nieuw array zouden moeten creëren (met NUMFOODS elementen)
         while (i < NUMFOODS) {
             food = this.createElement(XMIN + this.getRandomInt(0, xMax), YMIN + this.getRandomInt(0, yMax), FOOD);
-            if (!this.segments.some(food.collidesWithOneOf) && !foods.some(food.collidesWithOneOf)) {
+            if (!food.collidesWithOneOf(this.segments) && !food.collidesWithOneOf(foods)) {
                 foods.push(food);
                 i++;
             }

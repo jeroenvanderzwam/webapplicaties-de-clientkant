@@ -35,10 +35,13 @@ export var snakeModule;
             }
             return result;
         };
-        Element.prototype.collidesWithOneOf = function (element) {
-            return this.x == element.x && this.y == element.y;
+        Element.prototype.collidesWithOneOf = function (elementen) {
+            return elementen.some(this.collidesWith, this);
         };
         ;
+        Element.prototype.collidesWith = function (element) {
+            return this.x == element.x && this.y == element.y;
+        };
         return Element;
     }());
     snakeModule.Element = Element;
@@ -51,7 +54,6 @@ export var snakeModule;
         function Snake(width, heigth) {
             this.startSnake(width, heigth);
             this.segments = this.createStartSnake();
-            ;
             this.foods = this.createFoods();
             ;
         }
@@ -77,21 +79,17 @@ in het midden van het veld
         };
         Snake.prototype.headHitsAFood = function () {
             var head = this.getHead();
-            return this.foods.some(function (element) {
-                return head.collidesWithOneOf(element);
-            });
+            return head.collidesWithOneOf(this.foods);
         };
         Snake.prototype.headHitsASegment = function () {
             var head = this.getHead();
             var segmentsWithoutHead = this.segments.slice(0, -1);
-            return segmentsWithoutHead.some(function (element) {
-                return head.collidesWithOneOf(element);
-            });
+            return head.collidesWithOneOf(segmentsWithoutHead);
         };
         Snake.prototype.removeAFood = function () {
             var head = this.getHead();
             this.foods = this.foods.filter(function (element) {
-                return !head.collidesWithOneOf(element);
+                return !head.collidesWith(element);
             }, this);
         };
         Snake.prototype.noFoodsLeft = function () {
@@ -130,7 +128,7 @@ in het midden van het veld
             //we gebruiken een while omdat we, om een arraymethode te gebruiken, eerst een nieuw array zouden moeten creëren (met NUMFOODS elementen)
             while (i < NUMFOODS) {
                 food = this.createElement(XMIN + this.getRandomInt(0, xMax), YMIN + this.getRandomInt(0, yMax), FOOD);
-                if (!this.segments.some(food.collidesWithOneOf)) {
+                if (!food.collidesWithOneOf(this.segments) && !food.collidesWithOneOf(foods)) {
                     foods.push(food);
                     i++;
                 }
