@@ -51,13 +51,13 @@ var controller = (function() {
             draw();
             if (snakeModule.heeftGewonnen()) {
                 stop();
-                context.font = '20px Georgia';
-                context.fillText('you win')
+                context.font = '20px Courier New';
+                context.fillText('Gewonnen!', 10, 90);
             }
         } else {
             stop();
-            context.font = '20px Georgia';
-            context.fillText('you lose', 10, 90)
+            context.font = '20px Courier New';
+            context.fillText('Verloren!', 10, 90);
         };
     }
 
