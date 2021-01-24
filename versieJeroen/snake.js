@@ -1,3 +1,23 @@
+function power(base, exponent) {
+	var res = 1,
+		count;
+	if (isPosInteger(exponent)) {
+		for (count = 0; count < exponent; count++) {
+			res *= base;
+		}
+	}	
+	else {
+		throw Error("Exponent moet nul of groter zijn!");
+	}
+	return res;
+}
+
+function isPosInteger(x) {
+	return x >= 0 && Number.isInteger(x);
+}
+/**
+ * @namespace snakeModule
+ */
 var snakeModule = (function() {
     var snake,
         xMax,                     
@@ -21,7 +41,7 @@ var snakeModule = (function() {
 
     /**
      * @constructor Snake
-     * @param {[Element] segments een array met aaneengesloten slangsegmenten
+     * @param {[Element]} segments een array met aaneengesloten slangsegmenten
      * Het laatste element van segments wordt de kop van de slang 
      */
     function Snake(segments) {
@@ -36,6 +56,7 @@ var snakeModule = (function() {
      * @return {boolean} true als de slang kan bewegen, anders false
      */
     Snake.prototype.canMove = function(direction) {
+        console.log(snake);
         var head = this.getHead();
         return !this.headHitsASegment() && head.withinCanvas(direction);
     }
@@ -66,7 +87,9 @@ var snakeModule = (function() {
     }
 
     /**
-     * @function removeAFood() -> // TODO Write comments
+     * @function removeAFood() -> boolean
+     * @desc Controleert of food verwijdert moet worden
+     * @return true als food verwijdert moet worden, anders false
      */
     Snake.prototype.removeAFood = function() {
         var head = this.getHead();
@@ -251,7 +274,7 @@ var snakeModule = (function() {
 
     /**
      * @function startSnake() -> void
-     * @desc 
+     * @desc Regelt initialisatie voor de wijdte en hoogte, creeert oo k de snake en foods
      * @param {number} w de wijdte van het canvas
      * @param {number} h de hoogte van het canvas 
      */

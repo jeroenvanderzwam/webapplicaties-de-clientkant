@@ -1,3 +1,6 @@
+/**
+ * @namespace controller
+ */
 var controller = (function() {
     const                  
         SLEEPTIME = 100,
@@ -79,7 +82,6 @@ var controller = (function() {
      * @function drawElement(element, canvas) -> void
      * @desc Een element tekenen
      * @param {Element} element een Element object
-     * @param  {dom object} canvas het tekenveld
      */
     function drawElement(element) {
         canvas.drawArc({
