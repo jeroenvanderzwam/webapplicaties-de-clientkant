@@ -283,11 +283,11 @@ var snakeModule = (function() {
     }
 
     /**
-      @function move(direction) -> void
-      @desc Beweeg slang in aangegeven richting
-        tenzij slang uit canvas zou verdwijnen  
+      @function move(direction) -> boolean
+      @desc Controleert of de slang kan bewegen  
       @param {string} direction de richting (een van de constanten UP, DOWN, LEFT of RIGHT)
-    */
+      @return true als de slang kan bewegen, anders false
+      */
     function move(direction) {
         var result = false;
         if (snake.canMove(direction)) {
@@ -295,6 +295,10 @@ var snakeModule = (function() {
             result = true;
         }
         return result;
+        
+    
+    function moveHandler() {
+        
     }
     
     /**
