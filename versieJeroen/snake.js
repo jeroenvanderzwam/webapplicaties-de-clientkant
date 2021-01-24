@@ -20,31 +20,31 @@ var snakeModule = (function() {
         NUMFOODS = 5;
 
     /**
-      @constructor Snake
-      @param {[Element] segments een array met aaneengesloten slangsegmenten
-      Het laatste element van segments wordt de kop van de slang 
-    */
+     * @constructor Snake
+     * @param {[Element] segments een array met aaneengesloten slangsegmenten
+     * Het laatste element van segments wordt de kop van de slang 
+     */
     function Snake(segments) {
         this.segments = segments;
         this.foods = [];
     }
 
     /**
-      @function canMove(direction) -> boolean
-      @desc Controleert of de slang kan bewegen in gegeven richting
-      @param {string} direction de richting (een van de constanten UP, DOWN, LEFT of RIGHT)
-      @return {boolean} true als de slang kan bewegen, anders false
-    */
+     * @function canMove(direction) -> boolean
+     * @desc Controleert of de slang kan bewegen in gegeven richting
+     * @param {string} direction de richting (een van de constanten UP, DOWN, LEFT of RIGHT)
+     * @return {boolean} true als de slang kan bewegen, anders false
+     */
     Snake.prototype.canMove = function(direction) {
         var head = this.getHead();
         return !this.headHitsASegment() && head.withinCanvas(direction);
     }
 
     /**
-      @function headHitsAFood() -> boolean
-      @desc Controleert of de slang food raakt
-      @return {boolean} true als de slang food raakt, anders false
-    */
+     * @function headHitsAFood() -> boolean
+     * @desc Controleert of de slang food raakt
+     * @return {boolean} true als de slang food raakt, anders false
+     */
     Snake.prototype.headHitsAFood = function() {
         var head = this.getHead();
         return this.foods.some(function(element) {
@@ -53,10 +53,10 @@ var snakeModule = (function() {
     }
 
     /**
-      @function headHitsASegment() -> boolean
-      @desc Controleert of de slang een segment raakt
-      @return {boolean} true als de slang een segment raakt, anders false
-    */
+     * @function headHitsASegment() -> boolean
+     * @desc Controleert of de slang een segment raakt
+     * @return {boolean} true als de slang een segment raakt, anders false
+     */
     Snake.prototype.headHitsASegment = function() {
         var head = this.getHead();
         var segmentsWithoutHead = this.segments.slice(0,-1)
@@ -66,8 +66,8 @@ var snakeModule = (function() {
     }
 
     /**
-      @function removeAFood() -> // TODO Write comments
-    */
+     * @function removeAFood() -> // TODO Write comments
+     */
     Snake.prototype.removeAFood = function() {
         var head = this.getHead();
         this.foods = this.foods.filter(function (element) { 
@@ -75,19 +75,19 @@ var snakeModule = (function() {
     }
 
     /**
-      @function noFoodsLeft() -> boolean
-      @desc Controleert of er nog voedsel over is
-    */
+     * @function noFoodsLeft() -> boolean
+     * @desc Controleert of er nog voedsel over is
+     */
     Snake.prototype.noFoodsLeft = function() {
         return this.foods.length == 0;
     }
 
     /**
-      @function moveSnake(direction, snakeShouldGrow) -> void
-      @desc Beweeg de slang in gegeven richting
-      @param {string} direction de richting (een van de constanten UP, DOWN, LEFT of RIGHT)
-      @param {boolean} snakeShouldGrow geeft aan of de slang moet groeien of niet
-    */
+     * @function moveSnake(direction, snakeShouldGrow) -> void
+     * @desc Beweeg de slang in gegeven richting
+     * @param {string} direction de richting (een van de constanten UP, DOWN, LEFT of RIGHT)
+     * @param {boolean} snakeShouldGrow geeft aan of de slang moet groeien of niet
+     */
     Snake.prototype.moveSnake = function(direction, snakeShouldGrow) {
         var head = this.getHead();
         head.color = SNAKE;
@@ -98,19 +98,19 @@ var snakeModule = (function() {
     }
 
     /**
-      @function getHead() -> element
-      @desc Geeft het hoofd segment van de slang
-      @return element met hoofd segment
-    */
+     * @function getHead() -> element
+     * @desc Geeft het hoofd segment van de slang
+     * @return element met hoofd segment
+     */
     Snake.prototype.getHead = function() {
         return this.segments[this.segments.length - 1];
     }
     
     /**
-      @function doMove(direction) -> void
-      @desc Laat de slang bewegen
-      @param {string} direction de richting (een van de constanten UP, DOWN, LEFT of RIGHT)
-    */
+     * @function doMove(direction) -> void
+     * @desc Laat de slang bewegen
+     * @param {string} direction de richting (een van de constanten UP, DOWN, LEFT of RIGHT)
+     */
     Snake.prototype.doMove = function(direction) {
         if (this.headHitsAFood()) {
             this.removeAFood();
@@ -124,9 +124,9 @@ var snakeModule = (function() {
     }
 
     /**
-      @function createFoods() -> void
-      @desc [Element] array van random verdeelde voedselpartikelen, vult deze op
-    */
+     * @function createFoods() -> void
+     * @desc [Element] array van random verdeelde voedselpartikelen, vult deze op
+     */
     Snake.prototype.createFoods = function() {
         var i = 0,
             food;
@@ -141,11 +141,11 @@ var snakeModule = (function() {
     }
 
     /**
-      @function getNewHead(direction) -> element
-      @desc Geeft heet nieuwe head element van de slang
-      @param {string} direction de richting (een van de constanten UP, DOWN, LEFT of RIGHT)
-      @return {Element} met straal R en color HEAD
-    */
+     * @function getNewHead(direction) -> element
+     * @desc Geeft heet nieuwe head element van de slang
+     * @param {string} direction de richting (een van de constanten UP, DOWN, LEFT of RIGHT)
+     * @return {Element} met straal R en color HEAD
+     */
     Snake.prototype.getNewHead = function(direction) {
         var head = this.getHead()
         var newHead = createElement(head.x, head.y, HEAD);
@@ -167,23 +167,23 @@ var snakeModule = (function() {
     }
 
     /**
-      @function getRandomInt(min: number, max: number) -> number
-      @desc Creeren van random geheel getal in het interval [min, max] 
-      @param {number} min een geheel getal als onderste grenswaarde
-      @param {number} max een geheel getal als bovenste grenswaarde (max > min)
-      @return {number} een random geheel getal x waarvoor geldt: min <= x <= max
-    */
+     * @function getRandomInt(min: number, max: number) -> number
+     * @desc Creeren van random geheel getal in het interval [min, max] 
+     * @param {number} min een geheel getal als onderste grenswaarde
+     * @param {number} max een geheel getal als bovenste grenswaarde (max > min)
+     * @return {number} een random geheel getal x waarvoor geldt: min <= x <= max
+     */
     function getRandomInt(min, max) {
         return Math.round((Math.floor(Math.random() * (max - min + 1)) + min) / (width/STEP)) * (width/STEP);
     }
 
     /**
-      @constructor Element
-      @param radius straal
-      @param {number} x x-coordinaat middelpunt
-      @param {number} y y-coordinaat middelpunt
-      @param {string} color kleur van het element
-    */
+     * @constructor Element
+     * @param radius straal
+     * @param {number} x x-coordinaat middelpunt
+     * @param {number} y y-coordinaat middelpunt
+     * @param {string} color kleur van het element
+     */
    function Element(radius, x, y, color) {
     this.radius = radius;
     this.x = x;
@@ -192,12 +192,11 @@ var snakeModule = (function() {
     }
 
     /**
-      @function withinCanvas(direction) -> boolean
-      @desc Gaat na of de snake tegen de randen van het canvas botsts
-      @param {number} min een geheel getal als onderste grenswaarde
-      @param {number} max een geheel getal als bovenste grenswaarde (max > min)
-      @return {boolean} true als de slang binnen het canvas blijft, anders false
-    */
+     * @function withinCanvas(direction) -> boolean
+     * @desc Gaat na of de snake tegen de randen van het canvas botsts
+     * @param {string} direction de richting (een van de constanten UP, DOWN, LEFT of RIGHT)
+     * @return {boolean} true als de slang binnen het canvas blijft, anders false
+     */
     Element.prototype.withinCanvas = function(direction) {
         var result = true;
         switch(direction) {
@@ -218,32 +217,32 @@ var snakeModule = (function() {
     }
 
     /**
-      @function collidesWithOneOf -> boolean
-      @desc Gaat na of de snake tegen de randen van het canvas botsts
-      @param {Element} element een element in het spel
-      @return {boolean} true als de slang botst, anders false
+     * @function collidesWithOneOf -> boolean
+     * @desc Gaat na of de snake tegen de randen van het canvas botsts
+     * @param {Element} element een element in het spel
+     * @return {boolean} true als de slang botst, anders false
     */
     Element.prototype.collidesWithOneOf = function (element) {
         return this.x == element.x && this.y == element.y;
     };
 
     /**
-      @function createSegment(x,y) -> Element
-      @desc Slangsegment creeren op een bepaalde plaats
-      @param {number} x x-coordinaat middelpunt
-      @param {number} y y-coordinaart middelpunt
-      @return: {Element} met straal R en color SNAKE
-    */
+     * @function createSegment(x,y) -> Element
+     * @desc Slangsegment creeren op een bepaalde plaats
+     * @param {number} x x-coordinaat middelpunt
+     * @param {number} y y-coordinaart middelpunt
+     * @return: {Element} met straal R en color SNAKE
+     */
    function createElement(x, y, color)  {
     return new Element(R, x, y, color);
     }
 
     /**
-      @function createStartSnake() -> Snake
-      @desc Slang creëren, bestaande uit  twee segmenten, 
+     * @function createStartSnake() -> Snake
+     * @desc Slang creëren, bestaande uit  twee segmenten, 
             in het midden van het veld
-      @return: slang volgens specificaties
-    */
+     * @return: slang volgens specificaties
+     */
     function createStartSnake() {
     var startSegments = [createElement(R + width / 2, R + height / 2, SNAKE), 
                         createElement(R + width / 2, height / 2 - R, HEAD)];
@@ -251,11 +250,11 @@ var snakeModule = (function() {
     }
 
     /**
-      @function startSnake() -> void
-      @desc 
-      @param {number} w de wijdte van het canvas
-      @param {number} h de hoogte van het canvas 
-    */
+     * @function startSnake() -> void
+     * @desc 
+     * @param {number} w de wijdte van het canvas
+     * @param {number} h de hoogte van het canvas 
+     */
     function startSnake(w, h) {
         width = w;
         height = h;
@@ -266,41 +265,49 @@ var snakeModule = (function() {
     }
 
     /**
-      @function getSnakeFoods() -> array met food
-      @desc Geeft een array met de snake foods
-    */
+     * @function getSnakeFoods() -> array met food
+     * @desc Geeft een array met de snake foods
+     */
     function getSnakeFoods () {
         return snake.foods;
     }
 
     /**
-      @function getSnakeSegments() -> array met segments
-      @desc Geeft een array met de snake segments
-    */
+     * @function getSnakeSegments() -> array met segments
+     * @desc Geeft een array met de snake segments
+     */
     function getSnakeSegments() {
         return snake.segments;
     }
 
     /**
-      @function move(direction) -> boolean
-      @desc Controleert of de slang kan bewegen  
-      @param {string} direction de richting (een van de constanten UP, DOWN, LEFT of RIGHT)
-      @return true als de slang kan bewegen, anders false
-    */
-    function move(direction) {
+     * @function canMoveHandler(direction) -> boolean
+     * @desc Geeft aan of de slang kan bewegen
+     * @param {string} direction de richting (een van de constanten UP, DOWN, LEFT of RIGHT) 
+     * @return {boolean} true als de slang kan bewegen, anders false
+     */
+    function canMoveHandler(direction) {
         var result = false;
-        if (snake.canMove(direction)) {
-            snake.doMove(direction);
+        if(snake.canMove(direction)) {
             result = true;
         }
         return result;
     }
 
     /**
-      @function heeftGewonnen -> boolean
-      @desc Geeft aan of er is gewonnen
-      @return {boolean} true als er is gewonnen, anders false
-    */
+     * @function doMoveHandler(direction) -> void
+     * @desc Handelt af dat de slang moet bewegen
+     * @param {string} direction de richting (een van de constanten UP, DOWN, LEFT of RIGHT)
+     */
+    function doMoveHandler(direction) {
+        snake.doMove(direction);
+    }
+
+    /**
+     * @function heeftGewonnen -> boolean
+     * @desc Geeft aan of er is gewonnen
+     * @return {boolean} true als er is gewonnen, anders false
+     */
     function heeftGewonnen() {
         return gewonnen;
     }
@@ -311,9 +318,10 @@ var snakeModule = (function() {
         LEFT: LEFT,
         DOWN: DOWN,
         startSnake: startSnake,
-        move: move,
         getSnakeFoods: getSnakeFoods,
         getSnakeSegments: getSnakeSegments,
-        heeftGewonnen: heeftGewonnen
+        heeftGewonnen: heeftGewonnen,
+        canMoveHandler: canMoveHandler,
+        doMoveHandler: doMoveHandler
     }
 })();

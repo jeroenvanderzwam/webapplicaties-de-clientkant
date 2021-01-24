@@ -15,9 +15,9 @@ var controller = (function() {
         context;
 
     /**
-      @function init() -> void
-    @desc Haal eventueel bestaand voedsel en een bestaande slang weg, cre\"eer een slang, genereer voedsel, en teken alles
-    */
+     * @function init() -> void
+     * @desc Haal eventueel bestaand voedsel en een bestaande slang weg, cre\"eer een slang, genereer voedsel, en teken alles
+     */
     function init() {
         canvas = jQuery("#mijnSnakeCanvas").clearCanvas();
         context = canvas[0].getContext('2d');
@@ -31,22 +31,23 @@ var controller = (function() {
     }
 
     /**
-      @function stop() -> void
-      @desc Stopt het spel
-    */
+     * @function stop() -> void
+     * @desc Stopt het spel
+     */
     function stop() {
         context.clearRect(0,0,width, height);
         clearInterval(snakeTimer)
     }
 
     /**
-      @function move(direction) -> void
-      @desc Beweeg slang in aangegeven richting
+     * @function move(direction) -> void
+     * @desc Beweeg slang in aangegeven richting
         tenzij slang uit canvas zou verdwijnen  
-      @param   {string} direction de richting (een van de constanten UP, DOWN, LEFT of RIGHT)
-    */
+     * @param   {string} direction de richting (een van de constanten UP, DOWN, LEFT of RIGHT)
+     */
     function move(direction) {
-        if (snakeModule.move(direction)) {
+        if (snakeModule.canMoveHandler(direction)) {
+            snakeModule.doMoveHandler(direction);
             draw();
             if (snakeModule.heeftGewonnen()) {
                 stop();
@@ -61,9 +62,9 @@ var controller = (function() {
     }
 
     /**
-      @function draw() -> void
-      @desc Teken de slang en het voedsel
-    */
+     * @function draw() -> void
+     * @desc Teken de slang en het voedsel
+     */
     function draw() {
         context.clearRect(0,0,width, height);
     
@@ -75,11 +76,11 @@ var controller = (function() {
     }
 
     /**
-      @function drawElement(element, canvas) -> void
-      @desc Een element tekenen
-      @param {Element} element een Element object
-      @param  {dom object} canvas het tekenveld
-    */
+     * @function drawElement(element, canvas) -> void
+     * @desc Een element tekenen
+     * @param {Element} element een Element object
+     * @param  {dom object} canvas het tekenveld
+     */
     function drawElement(element) {
         canvas.drawArc({
             draggable: false,
@@ -91,10 +92,10 @@ var controller = (function() {
     };
 
     /**
-      @function changeDirection(e) -> void
-      @desc Geeft de richting aan de hand van een toets aanslag 
-      @param {event} e een event
-    */
+     * @function changeDirection(e) -> void
+     * @desc Geeft de richting aan de hand van een toets aanslag 
+     * @param {event} e een event
+     */
     function changeDirection(e) {
         switch (e.which) {
             case LEFTKEY:
