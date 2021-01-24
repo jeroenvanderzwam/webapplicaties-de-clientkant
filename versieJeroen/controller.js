@@ -30,6 +30,10 @@ function init() {
     }, SLEEPTIME)
 }
 
+        /**
+  @function stop() -> void
+  @desc Stopt het spel
+*/
 function stop() {
     context.clearRect(0,0,width, height);
     clearInterval(snakeTimer)
@@ -86,7 +90,11 @@ function draw() {
             radius: element.radius
         })
     };
-
+/**
+    @function changeDirection(e) -> void
+    @desc Geeft de richting aan de hand van een toets aanslag 
+    @param {event} e een event
+    */
     function changeDirection(e) {
         switch (e.which) {
             case LEFTKEY:
